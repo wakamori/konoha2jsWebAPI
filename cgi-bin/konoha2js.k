@@ -2,7 +2,7 @@
 KONOHA2JS="/usr/local/bin/konoha2js";
 TMP_SCRIPT="/var/tmp/tmp.k";
 class CGI {
-	String header = "Content-type: text/html\n\n";
+	String header = "Content-type: application/javascript\n\n";
 	CGI() {
 		String request_method = $env.REQUEST_METHOD;
 		if (request_method != "POST") {
