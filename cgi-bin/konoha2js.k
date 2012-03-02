@@ -18,7 +18,7 @@ class CGI {
 		OUT.println(header);
 		ous.println(input);
 		ous.close();
-		String jsscript = exec(KONOHA2JS + " -j -i " + TMP_SCRIPT);
+		String jsscript = exec(KONOHA2JS + " -j -r -i " + TMP_SCRIPT);
 		OUT.println(jsscript);
 	}
 }
