@@ -5,8 +5,7 @@ using konoha.conv.*;
 
 /* please change it to your own setting!! */
 KONOHA2JS="/usr/local/bin/konoha2js";
-TMP_KONOHA_DIR="/var/tmp/";
-TMP_JS_DIR="/Users/tsunade/Development/konoha_hp/tmp/";
+TMP_KONOHA_DIR="/tmp/";
 HTML_REPLACE_TARGET="<-- KONOHA_JS_CODE -->";
 
 class CGI {
@@ -42,22 +41,15 @@ class CGI {
 			OUT.println(jsscript);
 		} else if (m["requestedType"] == "html") {
 			header = "Access-Control-Allow-Origin: http://konohascript.org\n";
-			header += "Content-type: application/json\n\n";
-			String htmladdr = "/tmp/src" + currentTime + ".html";
+			header += "Content-type: text/html; charset=UTF-8\n\n";
 			if (m["htmlDocument"] == null || m["htmlDocument"] == "") {
 				String jsscript = exec(KONOHA2JS + " -r -i " + kscriptaddr);
-				OutputStream ous_html = new OutputStream(TMP_JS_DIR + "src" + currentTime + ".html");
-				ous_html.println(jsscript);
-				ous_html.close();
 				OUT.println(header);
-				OUT.println("{\"src\": \"" + htmladdr + "\"}");
+				OUT.println(jsscript);
 			} else {
 				String jsscript = exec(KONOHA2JS + " -j -r -i " + kscriptaddr);
-				OutputStream ous_html = new OutputStream(TMP_JS_DIR + "src" + currentTime + ".html");
-				ous_html.println(m["htmlDocument"].replace(HTML_REPLACE_TARGET, jsscript));
-				ous_html.close();
 				OUT.println(header);
-				OUT.println("{\"src\": \"" + htmladdr + "\"}");
+				OUT.println(m["htmlDocument"].replace(HTML_REPLACE_TARGET, jsscript));
 			}
 		} else {
 			ERR.println("unexpected requestedType option!!");
