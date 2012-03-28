@@ -51,6 +51,12 @@ class CGI {
 				OUT.println(header);
 				OUT.println(m["htmlDocument"].replace(HTML_REPLACE_TARGET, jsscript));
 			}
+		} else if (m["requestedType"] == "compile") {
+			header = "Access-Control-Allow-Origin: http://konohascript.org\n";
+			header += "Content-type: application/json; charset=UTF-8\n\n";
+			String jsonobj = exec(KONOHA2JS + " -c -i " + kscriptaddr);
+			OUT.println(header);
+			OUT.println(jsonobj);
 		} else {
 			ERR.println("unexpected requestedType option!!");
 			OUT.println(header);
